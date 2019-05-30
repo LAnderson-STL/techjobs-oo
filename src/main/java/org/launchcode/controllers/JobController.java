@@ -24,7 +24,7 @@ public class JobController {
     // The detail display for a given Job at URLs like /job?id=17
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model, int id) {
-    //public String index(@ModelAttribute JobData jobData, int id) {
+        //public String index(@ModelAttribute JobData jobData, int id) {
         // TODO #1 - get the Job with the given ID and pass it into the view
         model.addAttribute("job", jobData.findById(id));
 
@@ -44,7 +44,26 @@ public class JobController {
         // new Job and add it to the jobData data store. Then
         // redirect to the job detail view for the new Job.
 
-        return "";
 
-    }
+        //if there are errors, redirect back to form
+
+
+        if (errors.hasErrors()) {
+            System.out.println(errors.getAllErrors().toString());
+            return "new-job";
+        }
+
+        //creating newJob instance. get Id's from form and name from jobData
+        Job newJob = new Job(jobForm.getName(),
+                jobData.findById(jobForm.getEmployerId()).getEmployer(),
+                jobData.findById(jobForm.getLocationId()).getLocation(),
+                jobData.findById(jobForm.getPositionTypeId()).getPositionType(),
+                jobData.findById(jobForm.getCoreCompetencyId()).getCoreCompetency());
+
+       jobData.add(newJob);
+
+        model.addAttribute(newJob);
+
+        return "redirect: /?id=" + newJob.getId();
+   }
 }

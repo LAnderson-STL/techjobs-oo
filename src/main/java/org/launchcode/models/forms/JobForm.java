@@ -33,35 +33,17 @@ public class JobForm {
 
 
     //add remaining fields
-    private String location;
-    private String positionType;
-    private String coreCompetency;
+    @NotNull
+    private int locationId;
 
-    //getters and setters
+    @NotNull
+    private int positionTypeId;
 
-    public String getLocation() {
-        return location;
-    }
+    @NotNull
+    private int coreCompetencyId;
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
 
-    public String getPositionType() {
-        return positionType;
-    }
 
-    public void setPositionType(String positionType) {
-        this.positionType = positionType;
-    }
-
-    public String getCoreCompetency() {
-        return coreCompetency;
-    }
-
-    public void setCoreCompetency(String coreCompetency) {
-        this.coreCompetency = coreCompetency;
-    }
 
 
 
@@ -100,6 +82,34 @@ public class JobForm {
     public void setEmployerId(int employerId) {
         this.employerId = employerId;
     }
+
+    //getters and setters
+
+    public int getLocationId() {
+        return locationId;
+    }
+
+    public void setLocation(int location) {
+        this.locationId = locationId;
+    }
+
+    public int getPositionTypeId() {
+        return positionTypeId;
+    }
+
+    public void setPositionTypeId(int positionTypeId) {
+        this.positionTypeId = positionTypeId;
+    }
+
+    public int getCoreCompetencyId() {
+        return coreCompetencyId;
+    }
+
+    public void setCoreCompetency(int coreCompetency) {
+        this.coreCompetencyId = coreCompetencyId;
+    }
+
+    //end getters and setters I added
 
     public ArrayList<Employer> getEmployers() {
         return employers;
