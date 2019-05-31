@@ -1,6 +1,6 @@
 package org.launchcode.controllers;
 
-import org.launchcode.models.Job;
+import org.launchcode.models.*;
 import org.launchcode.models.forms.JobForm;
 import org.launchcode.models.data.JobData;
 import org.springframework.stereotype.Controller;
@@ -46,24 +46,27 @@ public class JobController {
 
 
         //if there are errors, redirect back to form
-
-
         if (errors.hasErrors()) {
             System.out.println(errors.getAllErrors().toString());
             return "new-job";
         }
 
-        //creating newJob instance. get Id's from form and name from jobData
-        Job newJob = new Job(jobForm.getName(),
-                jobData.findById(jobForm.getEmployerId()).getEmployer(),
-                jobData.findById(jobForm.getLocationId()).getLocation(),
-                jobData.findById(jobForm.getPositionTypeId()).getPositionType(),
-                jobData.findById(jobForm.getCoreCompetencyId()).getCoreCompetency());
 
-       jobData.add(newJob);
+        //create new job instance and pass to template
+        Employer newJobEmployer = jobData.getEmployers().findById(jobForm.getEmployerId());
+        Location newJobLocation = jobData.getLocations().findById(jobForm.getLocationId());
+        PositionType newJobPositionType = jobData.getPositionTypes().findById(jobForm.getPositionTypeId());
+        CoreCompetency newJobCoreCompetency = jobData.getCoreCompetencies().findById(jobForm.getCoreCompetencyId());
 
-        model.addAttribute(newJob);
+        Job newJob = new Job(jobForm.getName(), newJobEmployer, newJobLocation, newJobPositionType, newJobCoreCompetency);
 
-        return "redirect: /?id=" + newJob.getId();
+        JobData.getInstance().add(newJob);
+
+        return "redirect:?id=" +newJob.getId();
+
+
+
+
+
    }
 }
